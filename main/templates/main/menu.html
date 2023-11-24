@@ -1,0 +1,98 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<!--Buttons-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <button type="button" class="btn btn-outline-danger fw-bold btn-lg" data-bs-toggle="modal" data-bs-target="#username">GAME ON!!!</button>
+        </div>
+        <div class="col-6 text-center">
+            <button type="button" class="btn btn-outline-success btn-lg fw-bold" data-bs-toggle="modal" data-bs-target="#leaderboard">Leaderboard</button>
+        </div>
+    </div>
+</div>
+
+<!--Getting the username modal-->
+<div class="modal fade" id="username" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Type your Username</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method=POST>
+                <div class="modal-body">
+                    {% if submitted %}
+                        <h5>Username Saved</h5>
+
+                    {% else %}
+                        <div class="mb-2 mt-2">
+                            {% csrf_token %}
+                            {{form}}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Submit" class="btn btn-outline-success fw-bold">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Leaderboard modal-->
+<div class="modal fade" id="leaderboard" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title-leaderboard">{{LEADERBOARD}}</h5>
+            </div>
+            <div class="modal-body">
+
+                <!--Name section-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                            <h5>Names:</h5>
+                            <hr>
+                            {% for n in player %}
+                            <div class="float-container" id="namelist">
+                                <p class="fst-italic">{{n.name}}</p>
+                                <p style="font-size: smaller;" class="fst-italic" id="createdat">{{n.created_at|truncatechars:11 }}</p>
+                            </div>
+                            <hr style="margin-top: 0px;">
+                            {% endfor %}
+                            </div>
+                        </div>
+
+                        <!--Guesses section-->
+                        <div class="col">
+                            <div class="mb-3">
+                            <h5>Guesses:</h5>
+                            <hr>
+                            {% for n in player %}
+                            <div id="Guesses">
+                                <p class="fst-italic">{{n.guesses}}</p>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
