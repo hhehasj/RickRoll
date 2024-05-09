@@ -13,7 +13,7 @@ def home(response):
 def menu(request):
     # Variables
     submitted = False
-    leaderboard = Leader_Board.objects.get(id=2)
+    leaderboard = Leader_Board.objects.get(id=3)
     player = Player.objects.all()
     
     # Inserting username into database(Player)
