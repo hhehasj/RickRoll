@@ -1,0 +1,85 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<!--Mechanics of the game-->
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <!--Button for Mechanic Dropdown-->
+            <div class="accordion" id="mechanics-game">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="content-open-game">
+                        <button class="accordion-button btn btn-info" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#content-collapse-game" aria-expanded="true"
+                                aria-controls="content-collapse-game">
+                            Mechanics of the game
+                        </button>
+                    </h2>
+                    <!--Mechanic Dropdown-->
+                    <div id="content-collapse-game" class="accordion-collapse collapse show"
+                         aria-labelledby="content-open-game">
+                        <div class="accordion-body">
+                            <p class="mb-0">
+                                Enter your guess in the Empty Box.
+                                For every wrong guess, the guess counter increases.
+                                The lower the guess counts, the better. 😁
+                               
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Text Input-->
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <form class="form" action="" method="POST" name="guess-form" id="guess-form">
+                <div class="mt-5">
+                {% csrf_token %}
+                {% if answers == random_number %}
+                    <!--The button to trigger the modal-->
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#modal-youtube" id="button-for-video">BACK</div>
+                        </div>
+                    </div>
+                    
+                    <!--RickRoll video will be here-->
+                    <div class="modal" tabindex="-1" id="modal-youtube" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                        <div class="modal-dialog modal-fullscreen">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title" id="title-of-modal">LOL</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!--The Video here-->
+                                <div class="modal-body">
+                                    <iframe title="rickroll-video" allowfullscreen allow="autoplay" frameborder="0"></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <p class="fw-bold fs-1">You just got rickrolled!!!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {% else %}
+                    
+                    <div class="input-group input-group-lg">
+                        <button class="btn btn-outline-primary" name="submit-button" id="submit_button"  type="submit">
+                            Submit
+                        </button>
+                        <input type="text" name="answer_user" id="answer_user" class="form-control" placeholder="Enter a one-digit number">
+                    </div>
+
+                {% endif %} 
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
